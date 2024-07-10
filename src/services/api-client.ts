@@ -1,9 +1,19 @@
 import axios from "axios";
 
-// Access instance to the api
-export default axios.create({
-    baseURL: 'https://api.rawg.io/api/',
-    params:{
-        key: 'f9a9886de13e419589e5d62fa60f7f9a'
-    }
-})
+// Log pour vérifier si la variable d'environnement est chargée correctement
+console.log('API Key:', process.env.REACT_APP_RAWG_API_KEY);
+
+// Vérification de la variable d'environnement
+const apiKey = process.env.REACT_APP_RAWG_API_KEY;
+if (!apiKey) {
+  throw new Error("REACT_APP_API_KEY n'est pas défini");
+}
+
+const apiClient = axios.create({
+  baseURL: 'https://api.rawg.io/api/',
+  params: {
+    key: apiKey
+  }
+});
+
+export default apiClient;
