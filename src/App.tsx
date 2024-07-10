@@ -1,4 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
@@ -9,9 +10,8 @@ function App() {
           lg: `'nav''section main'`,
         }}
       ></Grid>
-      ;
       <GridItem area="nav" bg="coral">
-        Nav
+        <NavBar />
       </GridItem>
       <GridItem area="section" bg="gold">
         Section
