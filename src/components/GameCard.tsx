@@ -17,12 +17,16 @@ interface Props {
 
 const GameCard = ({ game }: Props) => {
   return (
-    <Card borderRadius={5} overflow="hidden">
+    <Card
+      borderRadius={5}
+      overflow="hidden"
+      //boxSize={{ base: "200px", sm: "200px", md: "300px", lg: "400px" }}
+    >
       <CardBody backgroundColor="#171d50">
-        <Flex direction="column" alignItems="flex-start">
+        <Flex direction="column" alignItems="center" justifyContent="center">
           <Image
             src={game.background_image}
-            boxSize={{ base: "50px", sm: "100px", md: "150px", lg: "200px" }}
+            boxSize={{ base: "100px", sm: "100", md: "150px", lg: "200px" }}
             borderRadius="50%"
             objectFit="cover"
           />
