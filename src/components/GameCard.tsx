@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
+import getCroppedImageUrl from "../services/image-url";
 
 interface Props {
   game: Game;
@@ -25,8 +26,8 @@ const GameCard = ({ game }: Props) => {
       <CardBody backgroundColor="#171d50">
         <Flex direction="column" alignItems="center" justifyContent="center">
           <Image
-            src={game.background_image}
-            boxSize={{ base: "100px", sm: "100", md: "150px", lg: "200px" }}
+            src={getCroppedImageUrl(game.background_image)}
+            boxSize={{ base: "100px", sm: "100px", md: "150px", lg: "200px" }}
             borderRadius="50%"
             objectFit="cover"
           />
