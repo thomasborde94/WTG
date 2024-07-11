@@ -24,22 +24,28 @@ export interface Game {
 const useGames = () => {
     const [games, setGames] = useState<Game[]>([]);
     const [error, setError] = useState("");
+    const [isLoading, setLoading] = useState(false)
       
     //To send a fetch request to backend
     // second argument is an empty array, to make sure we call the api only once
     useEffect(() => {
       const controller = new AbortController()
       // signal cancels the first call due tu strict mode 
+      setLoading(true)
       apiClient
         .get<FetchGamesResponse>("/games", {signal: controller.signal})
-        .then((res) => setGames(res.data.results))
+        .then((res) => {
+          setGames(res.data.results)
+          setLoading(false)
+        })
         .catch((err) => {
             if (err instanceof CanceledError) return;
             setError(err.message)});
+            setLoading(false)
 
         return () => controller.abort()
     }, []);
-    return { games, error }
+    return { games, error, isLoading }
 }
 
 

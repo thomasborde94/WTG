@@ -21,7 +21,7 @@ const GameCard = ({ game }: Props) => {
     <Card
       borderRadius={5}
       overflow="hidden"
-      //boxSize={{ base: "200px", sm: "200px", md: "300px", lg: "400px" }}
+      //boxSize={{ base: "300px", sm: "300px", md: "300px", lg: "400px" }}
     >
       <CardBody backgroundColor="#171d50">
         <Flex direction="column" alignItems="center" justifyContent="center">
