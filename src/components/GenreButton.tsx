@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import {
   Button,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Box,
   Text,
   Spinner,
-  useDisclosure,
+  Grid,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useGenres, { Genre } from "../hooks/useGenres";
 
-// Correctly define the Props interface
 interface Props {
   onSelectGenre: (genre: Genre) => void;
 }
@@ -23,49 +20,44 @@ interface Props {
 const GenreButton: React.FC<Props> = ({ onSelectGenre }) => {
   const { data, error, isLoading } = useGenres();
   const [selectedGenre, setSelectedGenre] = useState("Genre");
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleGenreSelect = (genre: Genre) => {
     setSelectedGenre(genre.name);
     onSelectGenre(genre); // Call the parent function with the selected genre
-    onClose(); // closes the panel automatically when selecting genre
   };
 
   return (
-    <Popover
-      placement="bottom-start"
-      isOpen={isOpen}
-      onClose={onClose}
-      onOpen={onOpen}
-    >
-      <PopoverTrigger>
-        <Button rightIcon={<ChevronDownIcon />} onClick={onOpen}>
-          {selectedGenre}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverBody>
-          {isLoading && <Spinner />}
-          {error && <Text>{error}</Text>}
-          {!isLoading && !error && (
-            <Box>
-              {data.map((genre) => (
-                <Button
-                  key={genre.id}
-                  margin={1}
-                  onClick={() => handleGenreSelect(genre)}
-                  _hover={{ color: "blue.500" }}
-                >
-                  {genre.name}
-                </Button>
-              ))}
+    <Menu>
+      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+        {selectedGenre}
+      </MenuButton>
+      <MenuList minWidth="400px">
+        <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+          {isLoading && (
+            <Box padding="12px">
+              <Spinner />
             </Box>
           )}
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
+          {error && (
+            <Box padding="12px">
+              <Text>{error}</Text>
+            </Box>
+          )}
+          {!isLoading && !error && (
+            <>
+              {data.map((genre) => (
+                <MenuItem
+                  key={genre.id}
+                  onClick={() => handleGenreSelect(genre)}
+                >
+                  {genre.name}
+                </MenuItem>
+              ))}
+            </>
+          )}
+        </Grid>
+      </MenuList>
+    </Menu>
   );
 };
 
