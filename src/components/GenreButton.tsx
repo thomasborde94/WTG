@@ -14,22 +14,19 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import useGenres, { Genre } from "../hooks/useGenres";
 
 interface Props {
+  selectedGenre: Genre | null;
   onSelectGenre: (genre: Genre) => void;
 }
 
-const GenreButton: React.FC<Props> = ({ onSelectGenre }) => {
+const GenreButton = ({ selectedGenre, onSelectGenre }: Props) => {
   const { data, error, isLoading } = useGenres();
-  const [selectedGenre, setSelectedGenre] = useState("Genre");
 
-  const handleGenreSelect = (genre: Genre) => {
-    setSelectedGenre(genre.name);
-    onSelectGenre(genre); // Call the parent function with the selected genre
-  };
+  if (error) return null;
 
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-        {selectedGenre}
+        {selectedGenre?.name || "Genre"}
       </MenuButton>
       <MenuList minWidth="400px">
         <Grid templateColumns="repeat(2, 1fr)" gap={2}>
@@ -46,10 +43,7 @@ const GenreButton: React.FC<Props> = ({ onSelectGenre }) => {
           {!isLoading && !error && (
             <>
               {data.map((genre) => (
-                <MenuItem
-                  key={genre.id}
-                  onClick={() => handleGenreSelect(genre)}
-                >
+                <MenuItem key={genre.id} onClick={() => onSelectGenre(genre)}>
                   {genre.name}
                 </MenuItem>
               ))}
