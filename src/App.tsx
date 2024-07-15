@@ -28,12 +28,12 @@ function App() {
           //lg: `'nav''section main' 'footer'`,
         }}
       ></Grid>
-      <GridItem area="nav" bg="coral">
+      <GridItem area="nav">
         <NavBar
           onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
         />
       </GridItem>
-      <GridItem area="section" bg="gold">
+      <GridItem area="section">
         <Flex marginBottom={4}>
           <Box marginRight={{ base: 2, lg: 5 }}>
             <PlatformSelector
@@ -57,13 +57,11 @@ function App() {
           />
         </Flex>
       </GridItem>
-      <GridItem area="main" bg="dodgerblue">
+      <GridItem area="main">
         <GameHeading gameQuery={gameQuery} />
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
-      <GridItem area="footer" bg="coral">
-        Footer
-      </GridItem>
+      <GridItem area="footer">Footer</GridItem>
     </>
   );
 }
