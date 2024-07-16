@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 const NavBar = () => {
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={5} paddingTop={4}>
-      <Heading>What's the game ?</Heading>
+      <Heading paddingLeft={3}>What's the game ?</Heading>
       <Image
         src={logo}
         alt="logo WTG"

@@ -22,7 +22,13 @@ const SortSelector = ({ onSelectSortOrder, sortOrder }: Props) => {
 
   return (
     <Menu>
-      <MenuButton as={Button} rightIcon={<BsChevronDown />}>
+      <MenuButton
+        as={Button}
+        rightIcon={<BsChevronDown />}
+        height="auto"
+        whiteSpace="normal"
+        isTruncated
+      >
         Order by: {currentSortOrder?.label || "Relevance"}
       </MenuButton>
       <MenuList minWidth="200px">
