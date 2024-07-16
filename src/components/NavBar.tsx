@@ -1,19 +1,19 @@
-import { HStack, Image, Text } from "@chakra-ui/react";
+import { Grid, Heading, HStack, Image, Text } from "@chakra-ui/react";
 import logo from "../assets/logo.png";
-import SearchInput from "./SearchInput";
 
-interface Props {
-  onSearch: (searchText: string) => void;
-}
-
-const NavBar = ({ onSearch }: Props) => {
+const NavBar = () => {
   return (
-    <HStack padding="10px">
-      <Text>What's the game ?</Text>
-      <Image src={logo} alt="logo WTG" boxSize="200px" objectFit="contain" />
-      <SearchInput onSearch={onSearch} />
-      <Text>Futur buttons</Text>
-    </HStack>
+    <Grid templateColumns="repeat(3, 1fr)" gap={5} paddingTop={4}>
+      <Heading>What's the game ?</Heading>
+      <Image
+        src={logo}
+        alt="logo WTG"
+        boxSize="200px"
+        objectFit="contain"
+        mx="auto"
+      />
+      <Heading>Futur buttons</Heading>
+    </Grid>
   );
 };
 
