@@ -10,6 +10,7 @@ import SortSelector from "./components/SortSelector";
 import GameHeading from "./components/GameHeading";
 import SearchInput from "./components/SearchInput";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Footer from "./components/Footer";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -75,7 +76,9 @@ function App() {
         <GameHeading gameQuery={gameQuery} />
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
-      <GridItem area="footer">Footer</GridItem>
+      <GridItem area="footer">
+        <Footer />
+      </GridItem>
     </>
   );
 }

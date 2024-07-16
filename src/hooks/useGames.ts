@@ -13,16 +13,27 @@ export interface Game {
     name: string;
     background_image:string;
     parent_platforms: {platform: Platform}[];
-    metacritic: number
+    metacritic: number;
   }
   
 // The hook gets the optionnal selected genre param
+// const useGames = (gameQuery: GameQuery) => useData<Game>('/games', {
+//   params: { 
+//     genres: gameQuery.genre?.id,
+//     platforms: gameQuery.platform?.id,
+//     ordering: gameQuery.sortOrder,
+//     search: gameQuery.searchText
+//   }},
+//   [gameQuery])
+
+// The hook gets the optional selected genre param
 const useGames = (gameQuery: GameQuery) => useData<Game>('/games', {
-  params: { 
+  params: {
     genres: gameQuery.genre?.id,
     platforms: gameQuery.platform?.id,
     ordering: gameQuery.sortOrder,
-    search: gameQuery.searchText
+    search: gameQuery.searchText,
+    page_size: 3 // Limitez le nombre de résultats par page ici
   }},
   [gameQuery])
 

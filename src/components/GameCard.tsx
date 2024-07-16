@@ -11,6 +11,7 @@ import {
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
 import getCroppedImageUrl from "../services/image-url";
+import StoreLink from "./StoreLink";
 
 interface Props {
   game: Game;
@@ -45,6 +46,7 @@ const GameCard = ({ game }: Props) => {
               <CriticScore score={game.metacritic} />
             </HStack>
           </Box>
+          <StoreLink gameId={game.id.toString()} />
         </Flex>
       </CardBody>
     </Card>
