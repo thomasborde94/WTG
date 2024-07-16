@@ -6,10 +6,10 @@ import { useState } from "react";
 import { Genre } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
 import { Platform } from "./hooks/useGames";
-import { queryObjects } from "v8";
 import SortSelector from "./components/SortSelector";
 import GameHeading from "./components/GameHeading";
 import SearchInput from "./components/SearchInput";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -30,7 +30,12 @@ function App() {
         }}
       ></Grid>
       <GridItem area="nav">
-        <NavBar />
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" />
+          </Routes>
+        </Router>
       </GridItem>
       <GridItem area="section" width="90%" mx="auto">
         {" "}
