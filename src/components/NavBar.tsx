@@ -7,7 +7,7 @@ import Navigation from "./Navigation";
 const NavBar = () => {
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={5} paddingTop={4}>
-      <Heading paddingLeft={3}>
+      <Heading paddingLeft={{ base: 4, sm: 8, md: 10, lg: 20 }}>
         <RouterLink to="/" style={{ textDecoration: "none", color: "inherit" }}>
           What's the game?
         </RouterLink>
