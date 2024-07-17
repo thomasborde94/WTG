@@ -25,7 +25,7 @@ const SortSelector = ({ onSelectSortOrder, sortOrder }: Props) => {
       <MenuButton
         as={Button}
         rightIcon={<BsChevronDown />}
-        height="auto"
+        height="40px"
         whiteSpace="normal"
         isTruncated
       >

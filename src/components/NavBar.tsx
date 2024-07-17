@@ -1,14 +1,16 @@
-import { Grid, Heading, HStack, Image, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+// src/components/NavBar.tsx
+import { Box, Button, Grid, Heading, Image } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import Navigation from "./Navigation";
 
 const NavBar = () => {
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={5} paddingTop={4}>
       <Heading paddingLeft={3}>
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+        <RouterLink to="/" style={{ textDecoration: "none", color: "inherit" }}>
           What's the game?
-        </Link>
+        </RouterLink>
       </Heading>
       <Image
         src={logo}
@@ -17,7 +19,7 @@ const NavBar = () => {
         objectFit="contain"
         mx="auto"
       />
-      <Heading>Futur buttons</Heading>
+      <Navigation />
     </Grid>
   );
 };
