@@ -9,13 +9,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-
-// crée l'application express
-const app = express();
+import Liked from './models/Liked.js'
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+// crée l'application express
+const app = express();
+
 
 // met à disposition les body des req content-type json  directement sur l'objet req
 app.use(express.json())
@@ -33,21 +35,26 @@ app.use((req, res, next)=> {
 })
 
 app.post('/api/stuff', (req, res, next) => {
-    console.log(req.body)
-    res.status(201).json({
-        message: 'objet créé'
+    delete req.body._id;
+    const liked = new Liked({
+        ...req.body
     })
+    liked.save()
+    .then(() => res.status(201).json({message:'Objet enregistré'}))
+    .catch(error => res.status(400).json({error}))
 })
 
 app.get('/api/stuff', (req, res, next) => {
     const stuff = [
       {
         _id: 'oeihfzeoi',
+        rawgId: 'fdfdg',
         slug: 'Mon premier objet',
         userId: 'qsomihvqios',
       },
       {
         _id: 'oeihfzeomoihi',
+        rawgId: 'fdsdswfdg',
         slug: 'Mon deuxième objet',
         userId: 'qsomihvqios',
       },
