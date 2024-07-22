@@ -34,7 +34,8 @@ app.use((req, res, next)=> {
     next()
 })
 
-app.post('/api/stuff', (req, res, next) => {
+// crée une nouvelle donnée
+app.post('/api/liked', (req, res, next) => {
     delete req.body._id;
     const liked = new Liked({
         ...req.body
@@ -44,22 +45,18 @@ app.post('/api/stuff', (req, res, next) => {
     .catch(error => res.status(400).json({error}))
 })
 
-app.get('/api/stuff', (req, res, next) => {
-    const stuff = [
-      {
-        _id: 'oeihfzeoi',
-        rawgId: 'fdfdg',
-        slug: 'Mon premier objet',
-        userId: 'qsomihvqios',
-      },
-      {
-        _id: 'oeihfzeomoihi',
-        rawgId: 'fdsdswfdg',
-        slug: 'Mon deuxième objet',
-        userId: 'qsomihvqios',
-      },
-    ];
-    res.status(200).json(stuff);
+// chercher une donnée spécifique
+app.get('/api/liked/:id', (req, res, next) => {
+  Liked.findOne({ _id: req.params.id })
+  .then(liked => res.status(200).json(thing))
+  .catch(error => res.status(404).json({error}))
+})
+
+// récupère tous les objets de la base
+app.get('/api/liked', (req, res, next) => {
+    Liked.find()
+    .then(likeds => res.status(200).json(likeds))
+    .catch(error => res.status(400).json({error}))
   });
 
 export default app
