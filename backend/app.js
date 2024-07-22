@@ -45,6 +45,20 @@ app.post('/api/liked', (req, res, next) => {
     .catch(error => res.status(400).json({error}))
 })
 
+// modifier une donnée, probablement pas besoin
+app.put('./api/liked/:id', (req, res, next) => {
+  Liked.updateOne({ _id: req.params.id }, {...req.body, _id:req.params.id})
+  .then(() => res.status(200).json({message: "objet modifié"}))
+  .catch(error => res.status(400).json({error}))
+})
+
+// delete une donnée
+app.delete('/api/liked/:id', (req, res, next) => {
+  Liked.deleteOne({ _id: req.params.id})
+  .then(() => res.status(200).json({message: "objet supprimé"}))
+  .catch(error => res.status(400).json({error}))
+})
+
 // chercher une donnée spécifique
 app.get('/api/liked/:id', (req, res, next) => {
   Liked.findOne({ _id: req.params.id })
