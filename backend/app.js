@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import likedRoutes from './routes/liked.js'
+import userRoutes from './routes/user.js'
 
 // needed to fin the env var
 const __filename = fileURLToPath(import.meta.url);
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 // met à disposition les body des req content-type json  directement sur l'objet req
 app.use(express.json())
 
-app.use('/api/stuff', likedRoutes)
+app.use('/api/liked', likedRoutes)
+app.use('/api/auth', userRoutes)
 
 export default app
