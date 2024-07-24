@@ -2,13 +2,17 @@ import { Box, Heading, Input, Button, Stack, useToast } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+// stocke les valeurs des champs d'entrée
 const CreateAccountPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  // permets de naviguer vers une autre page
   const navigate = useNavigate();
+  // affichage popup
   const toast = useToast();
 
+  // check si la verif password est bonne
   const handleSubmit = async () => {
     if (password !== confirmPassword) {
       toast({
@@ -21,6 +25,7 @@ const CreateAccountPage = () => {
       return;
     }
 
+    // Envoie une requête POST à l'endpoint /api/auth/signup pour créer un nouvel utilisateur avec l'email et le mot de passe fournis.
     try {
       const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",

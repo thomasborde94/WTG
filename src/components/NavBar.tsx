@@ -2,7 +2,6 @@
 import { Box, Button, Grid, Heading, Image } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import Navigation from "./Navigation";
 import { useState, useEffect } from "react";
 
 const NavBar = () => {

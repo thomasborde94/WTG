@@ -2,11 +2,13 @@ import { Box, Heading, Input, Button, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// stocke les valeurs des champs d'entrée
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // Envoie une requête POST à l'endpoint /api/auth/login pour authentifier l'utilisateur.
   const handleLogin = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/auth/login", {
@@ -17,7 +19,9 @@ const LoginPage = () => {
         body: JSON.stringify({ email, password }),
       });
 
+      // response.json traite la réponse du serveur
       const data = await response.json();
+      // response.ok indique que la requête a réussi
       if (response.ok) {
         localStorage.setItem("token", data.token); // Save token to localStorage
         navigate("/"); // Redirect to home page
