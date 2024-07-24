@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
 
+// Définition du schéma de l'utilisateur
 const userSchema = mongoose.Schema({
     email: { type: String, required: true, unique: true},
     password: {type: String, requred: true}

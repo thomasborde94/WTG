@@ -1,14 +1,16 @@
-import { Box, Heading, Input, Button, Stack } from "@chakra-ui/react";
+// src/pages/LoginPage.tsx
+import { Box, Heading, Input, Button, Stack, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Importation du hook
 
-// stocke les valeurs des champs d'entrée
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const toast = useToast();
+  const { login } = useAuth(); // Utilisation du hook
 
-  // Envoie une requête POST à l'endpoint /api/auth/login pour authentifier l'utilisateur.
   const handleLogin = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/auth/login", {
@@ -19,15 +21,21 @@ const LoginPage = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      // response.json traite la réponse du serveur
       const data = await response.json();
-      // response.ok indique que la requête a réussi
       if (response.ok) {
         localStorage.setItem("token", data.token); // Save token to localStorage
+        login(); // Met à jour le contexte pour indiquer que l'utilisateur est connecté
         navigate("/"); // Redirect to home page
-        window.location.reload(); // Force reload to update the NavBar
+        // window.location.reload(); // Plus besoin de recharger la page
       } else {
-        console.error(data.message); // Handle error
+        toast({
+          title: "Login failed",
+          description: data.message || "An error occurred.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        console.error(data.message);
       }
     } catch (error) {
       console.error("Error:", error);

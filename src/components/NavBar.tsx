@@ -1,24 +1,13 @@
-// src/components/NavBar.tsx
 import { Box, Button, Grid, Heading, Image } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext"; // Importation du hook
 
 const NavBar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if the user is logged in by checking the presence of the token
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []); // Run only once on mount
+  const { isLoggedIn, logout } = useAuth(); // Utilisation du hook
 
   const handleLogout = () => {
-    // Clear the token from localStorage and update the state
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/"); // Redirect to home page
+    logout(); // Appelle la fonction de déconnexion du contexte
   };
 
   return (
