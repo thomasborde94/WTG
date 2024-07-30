@@ -19,4 +19,13 @@ console.log("DB_DATABASE:", process.env.DB_DATABASE);
 console.log("DB_HOST:", process.env.DB_HOST);
 console.log("DB_DIALECT:", process.env.DB_DIALECT);
 
+// Test de la connexion
+sequelize.authenticate()
+  .then(() => {
+    console.log('Connection to the database has been established successfully.');
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
+
 module.exports = sequelize;

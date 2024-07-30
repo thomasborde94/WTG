@@ -1,6 +1,6 @@
 import http from 'http';
-import app from './app.js'
-import sequelize from './config/database.cjs';
+import app from './backend/app.js'
+import sequelize from './backend/config/database.cjs';
 
 // renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const normalizePort = val => {
@@ -38,15 +38,6 @@ const errorHandler = error => {
         throw error;
     }
 };
-
-// Test de la connexion à la base de données
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connection to the database has been established successfully.');
-  })
-  .catch((err) => {
-    console.error('Unable to connect to the database:', err);
-  });
 
 // lie l'application express au server
 const server = http.createServer(app);

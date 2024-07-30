@@ -14,6 +14,8 @@ export const signup = (req, res, next) => {
         .catch(error => res.status(400).json({error}))
     })
     .catch(error => res.status(500).json({error}))
+
+    
 }
 
 export const login = (req, res, next) => {
