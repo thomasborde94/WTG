@@ -49,15 +49,20 @@ const CreateAccountPage = () => {
         navigate("/login");
       } else {
         const errorData = await response.json();
+
+        // Assurez-vous que vous extrayez la chaîne de caractères du message d'erreur
+        const errorMessage = errorData.error.message || "An error occurred.";
+
         toast({
           title: "Error",
-          description: errorData.error || "An error occurred.",
+          description: errorMessage, // Utilisation de la chaîne de caractères uniquement
           status: "error",
           duration: 5000,
           isClosable: true,
         });
       }
     } catch (error) {
+      console.error("Erreur lors de la création de compte:", error);
       toast({
         title: "Error",
         description: "An error occurred while creating the account.",

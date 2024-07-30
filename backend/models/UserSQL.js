@@ -12,12 +12,12 @@ const UserSQL = sequelize.define('User', {
       isEmail: true,
     },
   },
-  createdAt: {
+  created_at: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
 }, {
-  tableName: 'USERS', // Ensure this matches your PostgreSQL table name
+  tableName: 'users', // Ensure this matches your PostgreSQL table name
   timestamps: false, // Disable automatic updatedAt column
 });
 
