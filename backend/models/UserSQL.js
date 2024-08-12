@@ -1,7 +1,5 @@
-// models/userSQL.js
-
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.cjs'; // Assurez-vous que ceci pointe vers votre instance Sequelize
+import sequelize from '../config/database.cjs';
 
 const UserSQL = sequelize.define('User', {
   email: {
@@ -10,10 +8,9 @@ const UserSQL = sequelize.define('User', {
     primaryKey: true,
     unique: true,
   },
-  // Vous pouvez ajouter d'autres champs si nécessaire
 }, {
   tableName: 'users', // Nom de la table en base de données
-  timestamps: false, // Désactiver les timestamps si vous ne les utilisez pas
+  timestamps: false,
 });
 
 export default UserSQL;

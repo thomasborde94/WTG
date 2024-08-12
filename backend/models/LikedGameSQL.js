@@ -1,4 +1,3 @@
-// models/LikedGameSQL.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.cjs';
 
@@ -7,7 +6,7 @@ const LikedGameSQL = sequelize.define('LikedGame', {
     type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: 'users', // Assurez-vous que le nom de la table est correct
+      model: 'users',
       key: 'email',
     },
   },
@@ -17,7 +16,7 @@ const LikedGameSQL = sequelize.define('LikedGame', {
   },
   genre: {
     type: DataTypes.STRING,
-    allowNull: true, // Vous pouvez ajuster selon vos besoins
+    allowNull: true,
   },
 }, {
   tableName: 'liked_games',
