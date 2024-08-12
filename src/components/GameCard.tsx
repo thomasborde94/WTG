@@ -30,26 +30,33 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
 
   const handleLike = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/liked-games", {
+      const url = liked
+        ? `http://localhost:3000/api/liked-games/${encodeURIComponent(
+            game.name
+          )}`
+        : "http://localhost:3000/api/liked-games";
+
+      const response = await fetch(url, {
         method: liked ? "DELETE" : "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({
-          gameName: game.name,
-          genre: game.genres[0]?.name, // Assurez-vous d'avoir un genre valide
-        }),
+        body: liked
+          ? null // Pas de body pour DELETE
+          : JSON.stringify({
+              gameName: game.name,
+              genre: game.genres[0]?.name,
+            }),
       });
 
-      // Vérifier si la réponse est OK
       if (response.ok) {
         const data = await response.json();
         setLiked(!liked);
         onLikeToggle(game.name);
         toast({
           title: liked ? "Game unliked" : "Game liked",
-          description: data.message, // Utilisez le message de la réponse
+          description: data.message,
           status: "success",
           duration: 5000,
           isClosable: true,
