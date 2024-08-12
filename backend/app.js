@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import path from 'path';
 import { fileURLToPath } from 'url';
-import likedRoutes from './routes/liked.js'
+import likedGamesRoutes from './routes/likedGames.js'
 import userRoutes from './routes/user.js'
 
 // needed to fin the env var
@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 // met à disposition les body des req content-type json  directement sur l'objet req
 app.use(express.json())
 
-app.use('/api/liked', likedRoutes)
+app.use('/api/liked-games', likedGamesRoutes);
 app.use('/api/auth', userRoutes)
 
 export default app

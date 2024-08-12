@@ -1,8 +1,10 @@
 const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
 
+// charge les variables d'environnement
 dotenv.config();
 
+// création d'une instance de sequelize avec les paramètres nécéssaires à la connexion
 const sequelize = new Sequelize(
   process.env.DB_DATABASE,
   process.env.DB_USERNAME,

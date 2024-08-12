@@ -1,24 +1,19 @@
-// models/UserSQL.js
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.cjs'; // Adjust the path to your Sequelize instance
+// models/userSQL.js
 
-// Define the User model for PostgreSQL
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.cjs'; // Assurez-vous que ceci pointe vers votre instance Sequelize
+
 const UserSQL = sequelize.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    primaryKey: true,
     unique: true,
-    validate: {
-      isEmail: true,
-    },
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
+  // Vous pouvez ajouter d'autres champs si nécessaire
 }, {
-  tableName: 'users', // Ensure this matches your PostgreSQL table name
-  timestamps: false, // Disable automatic updatedAt column
+  tableName: 'users', // Nom de la table en base de données
+  timestamps: false, // Désactiver les timestamps si vous ne les utilisez pas
 });
 
 export default UserSQL;

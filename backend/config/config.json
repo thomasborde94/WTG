@@ -1,0 +1,24 @@
+{
+    "development": {
+      "username": "game_user",
+      "password": "9V8bf7jznz,",
+      "database": "game_database",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    },
+    "test": {
+      "username": "votre_nom_utilisateur",
+      "password": "votre_mot_de_passe",
+      "database": "votre_base_de_donnees_test",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    },
+    "production": {
+      "username": "votre_nom_utilisateur",
+      "password": "votre_mot_de_passe",
+      "database": "votre_base_de_donnees_production",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    }
+  }
+  

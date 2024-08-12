@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import LoginPage from "./pages/LoginPage";
 import CreateAccountPage from "./pages/CreateAccountPage";
+import LikedGamesPage from "./pages/LikedGamesPage";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -86,6 +87,7 @@ function App() {
             />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/create-account" element={<CreateAccountPage />} />
+            <Route path="/liked-games" element={<LikedGamesPage />} />
           </Routes>
         </GridItem>
         <GridItem area="footer">

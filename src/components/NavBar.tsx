@@ -45,9 +45,19 @@ const NavBar = () => {
             </Button>
           </>
         ) : (
-          <Button colorScheme="blue" onClick={handleLogout}>
-            Logout
-          </Button>
+          <>
+            <Button
+              as={RouterLink}
+              to="/liked-games"
+              colorScheme="blue"
+              marginRight={4}
+            >
+              Liked Games
+            </Button>
+            <Button colorScheme="blue" onClick={handleLogout}>
+              Logout
+            </Button>
+          </>
         )}
       </Box>
     </Grid>
