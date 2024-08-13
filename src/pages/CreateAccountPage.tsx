@@ -50,12 +50,11 @@ const CreateAccountPage = () => {
       } else {
         const errorData = await response.json();
 
-        // Assurez-vous que vous extrayez la chaîne de caractères du message d'erreur
         const errorMessage = errorData.error.message || "An error occurred.";
 
         toast({
           title: "Error",
-          description: errorMessage, // Utilisation de la chaîne de caractères uniquement
+          description: errorMessage,
           status: "error",
           duration: 5000,
           isClosable: true,

@@ -1,5 +1,3 @@
-// migrations/{timestamp}-create-users-table.cjs
-
 'use strict';
 
 module.exports = {
@@ -11,7 +9,6 @@ module.exports = {
         primaryKey: true,
         unique: true,
       },
-      // Ajoutez d'autres champs si nécessaire
     });
   },
 

@@ -1,5 +1,3 @@
-// src/components/GameCard.tsx
-
 import { Game } from "../hooks/useGames";
 import {
   Card,
@@ -30,30 +28,34 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
 
   const handleLike = async () => {
     try {
+      // Détermine l'URL de l'API en fonction de l'état `liked`
       const url = liked
         ? `http://localhost:3000/api/liked-games/${encodeURIComponent(
             game.name
           )}`
         : "http://localhost:3000/api/liked-games";
 
+      // Envoie une requête API pour liker ou unliker le jeu
       const response = await fetch(url, {
         method: liked ? "DELETE" : "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Ajoute le token JWT pour l'authentification
         },
         body: liked
           ? null // Pas de body pour DELETE
           : JSON.stringify({
-              gameName: game.name,
-              genre: game.genres[0]?.name,
+              gameName: game.name, // Envoie le nom du jeu
+              genre: game.genres[0]?.name, // Envoie le genre du jeu
             }),
       });
 
+      // Si la requête est réussie
       if (response.ok) {
         const data = await response.json();
-        setLiked(!liked);
+        setLiked(!liked); // Inverse l'état `liked`
         onLikeToggle(game.name);
+        // Affiche le toast Chakra
         toast({
           title: liked ? "Game unliked" : "Game liked",
           description: data.message,
@@ -62,6 +64,7 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
           isClosable: true,
         });
       } else {
+        // Si erreur dans la réponse
         const errorData = await response.json();
         toast({
           title: "Error",
@@ -72,6 +75,7 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
         });
       }
     } catch (error) {
+      // Si erreur dans la requete
       console.error("Error:", error);
       toast({
         title: "Error",

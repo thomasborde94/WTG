@@ -1,6 +1,5 @@
 import http from 'http';
 import app from './backend/app.js'
-import sequelize from './backend/config/database.cjs';
 
 // renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const normalizePort = val => {

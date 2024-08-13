@@ -2,14 +2,14 @@
 import { Box, Heading, Input, Button, Stack, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Importation du hook
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
-  const { login } = useAuth(); // Utilisation du hook
+  const { login } = useAuth(); // Utilisation du hook context
 
   const handleLogin = async () => {
     try {
@@ -26,7 +26,6 @@ const LoginPage = () => {
         localStorage.setItem("token", data.token); // Save token to localStorage
         login(); // Met à jour le contexte pour indiquer que l'utilisateur est connecté
         navigate("/"); // Redirect to home page
-        // window.location.reload(); // Plus besoin de recharger la page
       } else {
         toast({
           title: "Login failed",

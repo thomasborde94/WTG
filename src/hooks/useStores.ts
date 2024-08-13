@@ -7,7 +7,7 @@ interface Stores {
     url: string
 }
 
+// Hook pour récupérer les stores des jeux vidéos
 const useStores = (gameId: string) => useData<Stores>(`/games/${gameId}/stores`);
-//const useStores = () => useData<Stores[]>('/games/{game_pk}/stores')
 
 export default useStores

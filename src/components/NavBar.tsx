@@ -1,10 +1,10 @@
 import { Box, Button, Grid, Heading, Image } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { useAuth } from "../context/AuthContext"; // Importation du hook
+import { useAuth } from "../context/AuthContext";
 
 const NavBar = () => {
-  const { isLoggedIn, logout } = useAuth(); // Utilisation du hook
+  const { isLoggedIn, logout } = useAuth();
 
   const handleLogout = () => {
     logout(); // Appelle la fonction de déconnexion du contexte

@@ -1,4 +1,3 @@
-// src/components/Footer.js
 import { Box, Flex, Heading, Link, Icon } from "@chakra-ui/react";
 import { FaYoutube, FaGithub, FaLinkedin } from "react-icons/fa";
 

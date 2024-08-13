@@ -6,6 +6,7 @@ interface Platform {
     slug: string
 }
 
+// Hook pour récupérer les plateformes de jeux vidéo
 const usePlatform = () => useData<Platform>('/platforms/lists/parents')
 
 export default usePlatform

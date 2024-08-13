@@ -12,31 +12,32 @@ interface Props {
 
 const GameGrid = ({ gameQuery }: Props) => {
   const { data, error, isLoading } = useGames(gameQuery);
+
+  // Déclaration de l'état local `likedGames` qui stocke un ensemble de noms de jeux likés
   const [likedGames, setLikedGames] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    // récupère les jeux likés de l'utilisateur depuis l'API
     const fetchLikedGames = async () => {
       try {
+        // Requête GET à l'API pour récupérer les jeux likés
         const response = await axios.get(
           "http://localhost:3000/api/liked-games",
           {
             headers: {
+              // Inclusion du token pour l'authentification
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
 
-        // Vérifiez si la réponse est un tableau et loggez-la pour vérification
-        console.log("Response data:", response.data);
-
         if (Array.isArray(response.data)) {
+          // Extraction des noms des jeux likés
           const likedGameNames = response.data.map(
             (game: { game_name: string }) => game.game_name
           );
 
-          // Debugging output
-          console.log("Extracted liked game names:", likedGameNames);
-
+          // Mise à jour de l'état `likedGames` avec les noms des jeux likés
           setLikedGames(new Set(likedGameNames));
         } else {
           console.error("Response is not an array:", response.data);
@@ -49,14 +50,19 @@ const GameGrid = ({ gameQuery }: Props) => {
     fetchLikedGames();
   }, []);
 
+  // Gère le toggle like/unlike d'un jeu
   const handleLikeToggle = (gameName: string) => {
     setLikedGames((prevLikedGames) => {
+      // Crée une copie de l'ensemble `likedGames`
       const updatedLikedGames = new Set(prevLikedGames);
+
+      // Ajoute ou supprime le jeu de l'ensemble en fonction de son état actuel
       if (updatedLikedGames.has(gameName)) {
-        updatedLikedGames.delete(gameName);
+        updatedLikedGames.delete(gameName); // Supprime si déjà liké
       } else {
-        updatedLikedGames.add(gameName);
+        updatedLikedGames.add(gameName); // Ajoute si pas encore liké
       }
+      // Retourne le nouvel ensemble mis à jour
       return updatedLikedGames;
     });
   };

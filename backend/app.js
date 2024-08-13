@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import likedGamesRoutes from './routes/likedGames.js'
 import userRoutes from './routes/user.js'
 
-// needed to fin the env var
+// needed to find the env var
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });

@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'users',
-          key: 'email', // Référence correcte de l'email
+          key: 'email',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
