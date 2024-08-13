@@ -12,7 +12,7 @@ import usePlatform from "../hooks/usePlatform";
 import { Platform } from "../hooks/useGames";
 
 interface Props {
-  onSelectPlatform: (platform: Platform) => void;
+  onSelectPlatform: (platform: Platform | null) => void;
   selectedPlatform: Platform | null;
 }
 
@@ -27,6 +27,9 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatform }: Props) => {
         {selectedPlatform?.name || "Platforms"}
       </MenuButton>
       <MenuList minWidth="400px">
+        <GridItem>
+          <MenuItem onClick={() => onSelectPlatform(null)}>All</MenuItem>
+        </GridItem>
         <Grid templateColumns="repeat(2, 1fr)" gap={2}>
           {data.map((platform) => (
             <GridItem key={platform.id}>

@@ -9,13 +9,14 @@ import {
   Text,
   Spinner,
   Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useGenres, { Genre } from "../hooks/useGenres";
 
 interface Props {
   selectedGenre: Genre | null;
-  onSelectGenre: (genre: Genre) => void;
+  onSelectGenre: (genre: Genre | null) => void;
 }
 
 const GenreButton = ({ selectedGenre, onSelectGenre }: Props) => {
@@ -29,6 +30,9 @@ const GenreButton = ({ selectedGenre, onSelectGenre }: Props) => {
         {selectedGenre?.name || "Genre"}
       </MenuButton>
       <MenuList minWidth="400px">
+        <GridItem>
+          <MenuItem onClick={() => onSelectGenre(null)}>All</MenuItem>
+        </GridItem>
         <Grid templateColumns="repeat(2, 1fr)" gap={2}>
           {isLoading && (
             <Box padding="12px">
