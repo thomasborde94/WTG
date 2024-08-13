@@ -27,6 +27,18 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
   const toast = useToast();
 
   const handleLike = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Affiche un message d'erreur si l'utilisateur n'est pas connecté
+      toast({
+        title: "Error",
+        description: "You must be logged in to like a game.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return; // Sort de la fonction sans envoyer la requête API
+    }
     try {
       // Détermine l'URL de l'API en fonction de l'état `liked`
       const url = liked

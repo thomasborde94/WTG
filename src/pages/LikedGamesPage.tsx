@@ -1,6 +1,7 @@
-// src/pages/LikedGamesPage.tsx
 import { useEffect, useState } from "react";
 import { Box, Heading, Stack, Button, Text, useToast } from "@chakra-ui/react";
+import StoreLink from "../components/StoreLink";
+import { Game } from "../hooks/useGames";
 
 interface LikedGame {
   id: number;
@@ -103,6 +104,7 @@ const LikedGamesPage = () => {
               >
                 Unlike
               </Button>
+              <StoreLink gameId={game.id.toString()} />
             </Box>
           ))
         ) : (
