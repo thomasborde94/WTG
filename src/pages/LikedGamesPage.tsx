@@ -1,41 +1,25 @@
-import { useEffect, useState } from "react";
-import { Box, Heading, Stack, Button, Text, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Stack,
+  Button,
+  Text,
+  useToast,
+  Flex,
+} from "@chakra-ui/react";
 import StoreLink from "../components/StoreLink";
-import { Game } from "../hooks/useGames";
-
-interface LikedGame {
-  id: number;
-  game_name: string;
-  genre: string;
-}
+import { useLikedGames } from "../context/LikedGamesContext";
 
 const LikedGamesPage = () => {
-  const [likedGames, setLikedGames] = useState<LikedGame[]>([]);
+  const { likedGames, removeLikedGame } = useLikedGames(); // Récupération des jeux likés et des méthodes associées
   const toast = useToast();
 
-  useEffect(() => {
-    const fetchLikedGames = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/liked-games", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-
-        const data = await response.json();
-        setLikedGames(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    fetchLikedGames();
-  }, []);
-
+  // Fonction pour gérer l'action d'unlike d'un jeu
   const handleUnlike = async (gameName: string) => {
     try {
+      // Requête à l'API pour supprimer un jeu des jeux likés
       const response = await fetch(
-        `http://localhost:3000/api/liked-games/${gameName}`,
+        `http://localhost:3000/api/liked-games/${encodeURIComponent(gameName)}`,
         {
           method: "DELETE",
           headers: {
@@ -44,10 +28,9 @@ const LikedGamesPage = () => {
         }
       );
 
+      // Vérification si la requête a réussi
       if (response.ok) {
-        setLikedGames((prevGames) =>
-          prevGames.filter((game) => game.game_name !== gameName)
-        );
+        removeLikedGame(gameName); // Mise à jour du contexte pour supprimer le jeu
         toast({
           title: "Game unliked",
           status: "success",
@@ -88,23 +71,25 @@ const LikedGamesPage = () => {
               borderWidth={1}
               borderRadius={5}
               boxShadow="md"
-              backgroundColor="white"
+              backgroundColor="#171d50"
             >
-              <Text fontSize="lg" fontWeight="bold" color={"black"}>
-                {game.game_name}
+              <Text fontSize="lg" fontWeight="bold" color={"white"}>
+                {game.gameName}
               </Text>
-              <Text fontSize="sm" color="gray.600">
+              <Text fontSize="sm" color="white">
                 Genre: {game.genre}
               </Text>
-              <Button
-                colorScheme="red"
-                size="sm"
-                mt={2}
-                onClick={() => handleUnlike(game.game_name)}
-              >
-                Unlike
-              </Button>
-              <StoreLink gameId={game.id.toString()} />
+
+              <Flex mt={2} justifyContent="space-between">
+                <Button
+                  colorScheme="red"
+                  size="sm"
+                  onClick={() => handleUnlike(game.gameName)}
+                >
+                  Unlike
+                </Button>
+                <StoreLink gameId={game.id.toString()} />
+              </Flex>
             </Box>
           ))
         ) : (

@@ -15,6 +15,7 @@ import CriticScore from "./CriticScore";
 import getCroppedImageUrl from "../services/image-url";
 import StoreLink from "./StoreLink";
 import { useState } from "react";
+import { useLikedGames } from "../context/LikedGamesContext";
 
 interface Props {
   game: Game;
@@ -23,51 +24,66 @@ interface Props {
 }
 
 const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
-  const [liked, setLiked] = useState(isLiked);
+  const [liked, setLiked] = useState(isLiked); // État pour suivre si le jeu est liké
   const toast = useToast();
+  const { addLikedGame, removeLikedGame } = useLikedGames();
 
+  // Fonction pour gérer le like/unlike
   const handleLike = async () => {
+    // Récupération du token de l'utilisateur
     const token = localStorage.getItem("token");
+
+    // Vérification de la présence d'un token (utilisateur connecté)
     if (!token) {
-      // Affiche un message d'erreur si l'utilisateur n'est pas connecté
       toast({
         title: "Error",
-        description: "You must be logged in to like a game.",
+        description: "You must be logged in to like/unlike a game.",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
-      return; // Sort de la fonction sans envoyer la requête API
+      return;
     }
     try {
-      // Détermine l'URL de l'API en fonction de l'état `liked`
+      // Définition de l'URL de l'API en fonction de l'état liked
       const url = liked
         ? `http://localhost:3000/api/liked-games/${encodeURIComponent(
             game.name
           )}`
         : "http://localhost:3000/api/liked-games";
 
-      // Envoie une requête API pour liker ou unliker le jeu
+      // Requête à l'API pour liker ou unliker le jeu
       const response = await fetch(url, {
         method: liked ? "DELETE" : "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Ajoute le token JWT pour l'authentification
+          Authorization: `Bearer ${token}`, // Inclusion du token dans les headers pour l'authentification
         },
         body: liked
-          ? null // Pas de body pour DELETE
+          ? null
           : JSON.stringify({
-              gameName: game.name, // Envoie le nom du jeu
-              genre: game.genres[0]?.name, // Envoie le genre du jeu
+              gameName: game.name,
+              genre: game.genres[0]?.name,
             }),
       });
 
-      // Si la requête est réussie
+      // Gestion de la réponse de l'API
       if (response.ok) {
         const data = await response.json();
-        setLiked(!liked); // Inverse l'état `liked`
-        onLikeToggle(game.name);
-        // Affiche le toast Chakra
+        setLiked(!liked); // Mise à jour de l'état liked
+        onLikeToggle(game.name); // Callback pour informer du changement de like
+
+        // Ajout ou suppression du jeu dans le contexte des jeux likés
+        if (!liked) {
+          addLikedGame({
+            id: game.id,
+            gameName: game.name,
+            genre: game.genres[0]?.name,
+          });
+        } else {
+          removeLikedGame(game.name);
+        }
+
         toast({
           title: liked ? "Game unliked" : "Game liked",
           description: data.message,
@@ -76,7 +92,7 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
           isClosable: true,
         });
       } else {
-        // Si erreur dans la réponse
+        // Gestion des erreurs de l'API
         const errorData = await response.json();
         toast({
           title: "Error",
@@ -87,7 +103,6 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
         });
       }
     } catch (error) {
-      // Si erreur dans la requete
       console.error("Error:", error);
       toast({
         title: "Error",
@@ -122,15 +137,14 @@ const GameCard = ({ game, isLiked, onLikeToggle }: Props) => {
               />
               <CriticScore score={game.metacritic} />
             </HStack>
-            <Button
-              colorScheme={liked ? "red" : "blue"}
-              mt={2}
-              onClick={handleLike}
-            >
-              {liked ? "Unlike" : "Like"}
-            </Button>
+
+            <Flex mt={2} justifyContent="space-between" width="100%">
+              <Button colorScheme={liked ? "red" : "blue"} onClick={handleLike}>
+                {liked ? "Unlike" : "Like"}
+              </Button>
+              <StoreLink gameId={game.id.toString()} />
+            </Flex>
           </Box>
-          <StoreLink gameId={game.id.toString()} />
         </Flex>
       </CardBody>
     </Card>
