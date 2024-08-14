@@ -1,5 +1,5 @@
-import { Box, Button, Grid, Heading, Image } from "@chakra-ui/react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Box, Button, Grid, Heading, Image, Stack } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
 
@@ -30,35 +30,30 @@ const NavBar = () => {
         justifyContent="flex-end"
         paddingRight={{ base: 4, sm: 8, md: 10, lg: 20 }}
       >
-        {!isLoggedIn ? (
-          <>
-            <Button
-              as={RouterLink}
-              to="/login"
-              colorScheme="blue"
-              marginRight={4}
-            >
-              Login
-            </Button>
-            <Button as={RouterLink} to="/create-account" colorScheme="blue">
-              Create Account
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              as={RouterLink}
-              to="/liked-games"
-              colorScheme="blue"
-              marginRight={4}
-            >
-              Liked Games
-            </Button>
-            <Button colorScheme="blue" onClick={handleLogout}>
-              Logout
-            </Button>
-          </>
-        )}
+        <Stack
+          direction={{ base: "column", sm: "row" }} // Vertical alignment on small screens, horizontal on larger screens
+          spacing={4}
+        >
+          {!isLoggedIn ? (
+            <>
+              <Button as={RouterLink} to="/login" colorScheme="blue">
+                Login
+              </Button>
+              <Button as={RouterLink} to="/create-account" colorScheme="blue">
+                Create Account
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button as={RouterLink} to="/liked-games" colorScheme="blue">
+                Liked Games
+              </Button>
+              <Button colorScheme="blue" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          )}
+        </Stack>
       </Box>
     </Grid>
   );
