@@ -24,7 +24,7 @@ const useGames = (gameQuery: GameQuery) => useData<Game>('/games', {
     platforms: gameQuery.platform?.id,
     ordering: gameQuery.sortOrder,
     search: gameQuery.searchText,
-    page_size: 3 // Limite le nombre de résultats par page ici
+    page_size: 10 // Limite le nombre de résultats par page ici
   }}, [gameQuery]) // l'effet se déclenche lorsque `gameQuery` change
 
 export default useGames
